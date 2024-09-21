@@ -15,7 +15,7 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <html lang="ko" className="w-full h-full">
+    <html lang="ko" className="w-full h-full bg-white">
       <body className="w-full h-full">
         <Providers>
           {children}
