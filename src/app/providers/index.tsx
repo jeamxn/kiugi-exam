@@ -1,7 +1,9 @@
 "use client";
+// import "moment/locale/ko";
 import React from "react";
 
 import ReactQueryProvider from "./ReactQueryProvider";
+import RecoilProvider from "./RecoilProvider";
 
 const Providers = ({ 
   children,
@@ -9,9 +11,11 @@ const Providers = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <ReactQueryProvider>
-      {children}
-    </ReactQueryProvider>
+    <RecoilProvider>
+      <ReactQueryProvider>
+        {children}
+      </ReactQueryProvider>
+    </RecoilProvider>
   );
 };
 

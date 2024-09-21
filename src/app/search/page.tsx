@@ -4,36 +4,30 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Link from "next/link";
 import React from "react";
+import { useRecoilValue } from "recoil";
 
-import { getTests, Subject, TestResponse } from "@/utils/getTests";
+import { TestResponse } from "@/utils/getTests";
+import { beginYearAtom, endYearAtom, gradeAtom, monthAtom, subjectAtom } from "@/utils/states";
 
-const Search = ({
-  searchParams
-}: {
-  searchParams: {
-    grade: string;
-    subjects: string;
-    months: string;
-    beginYear: string;
-    endYear: string;
-  }
-}) => {
-  const grade = Number(searchParams.grade);
-  const subjList = JSON.parse(searchParams.subjects) as Subject[];
-  const monthList = JSON.parse(searchParams.months) as number[];
-  const beginYear = Number(searchParams.beginYear);
-  const endYear = Number(searchParams.endYear);
+const SearchPage = () => {
+  const grade = useRecoilValue(gradeAtom);
+  const subjList = useRecoilValue(subjectAtom);
+  const monthList = useRecoilValue(monthAtom);
+  const beginYear = useRecoilValue(beginYearAtom);
+  const endYear = useRecoilValue(endYearAtom);
 
   const { isFetching, data: find } = useQuery({
-    queryKey: ["get_data", JSON.stringify(searchParams)],
+    queryKey: ["get_data", grade, subjList, monthList, beginYear, endYear],
     queryFn: async () => {
-      const { data } = await axios.post("/search/post", {
+      const searchData = {
         grade,
         monthList,
         subjList,
         beginYear,
         endYear,
-      });
+      };
+      const { data } = await axios.post("/search/post", searchData);
+      localStorage.setItem("find", JSON.stringify(searchData));
       return data as TestResponse[];
     },
     initialData: [],
@@ -139,4 +133,4 @@ const Search = ({
   );
 };
 
-export default Search;
+export default SearchPage;
