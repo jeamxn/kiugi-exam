@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import React from "react";
 
 import "./globals.css";
+import Providers from "./providers";
 
 export const metadata: Metadata = {
   title: "모의고사 키우기",
@@ -16,7 +17,9 @@ const RootLayout = ({
   return (
     <html lang="ko" className="w-full h-full">
       <body className="w-full h-full">
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );

@@ -13,19 +13,29 @@ export const subjectMap = {
 };
 export type Subject = keyof typeof subjectMap;
 
+export type Test = {
+  grade: number;
+  monthList: number[];
+  subjList: Subject[];
+  beginYear: number;
+  endYear: number;
+};
+
+export type TestResponse = {
+  title: string;
+  buttons: {
+    label: string;
+    url: string;
+  }[]
+};
+
 export const getTests = async ({
   grade,
   monthList,
   subjList,
   beginYear,
   endYear,
-}: {
-  grade: number;
-  monthList: number[];
-  subjList: Subject[];
-  beginYear: number;
-  endYear: number;
-}) => {
+}: Test) => {
   const response = await axios.post(
     "https://www.ebsi.co.kr/ebs/xip/xipc/previousPaperListAjax.ajax",
     new URLSearchParams([
@@ -56,11 +66,5 @@ export const getTests = async ({
       buttons,
     });
   }
-  return json as {
-    title: string;
-    buttons: {
-      label: string;
-      url: string;
-    }[]
-  }[];
+  return json as TestResponse[];
 };

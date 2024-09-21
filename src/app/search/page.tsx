@@ -1,9 +1,13 @@
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import Link from "next/link";
 import React from "react";
 
-import { getTests, Subject } from "@/utils/getTests";
+import { getTests, Subject, TestResponse } from "@/utils/getTests";
 
-const Search = async ({
+const Search = ({
   searchParams
 }: {
   searchParams: {
@@ -19,13 +23,22 @@ const Search = async ({
   const monthList = JSON.parse(searchParams.months) as number[];
   const beginYear = Number(searchParams.beginYear);
   const endYear = Number(searchParams.endYear);
-  const find = await getTests({
-    grade,
-    monthList,
-    subjList,
-    beginYear,
-    endYear,
+
+  const { isFetching, data: find } = useQuery({
+    queryKey: ["get_data", JSON.stringify(searchParams)],
+    queryFn: async () => {
+      const { data } = await axios.post("/search/post", {
+        grade,
+        monthList,
+        subjList,
+        beginYear,
+        endYear,
+      });
+      return data as TestResponse[];
+    },
+    initialData: [],
   });
+
   return (
     <div className="w-full h-full flex flex-col gap-5 px-4 py-5">
       <Link href="/" className="flex flex-row items-center justify-start gap-2 w-fit p-4 -m-4" prefetch>
@@ -44,7 +57,15 @@ const Search = async ({
         <p className="text-slate-600 font-semibold text-2xl">모의고사 키우기</p>
       </Link>
       {
-        find.length ? find.map((e, i) => (
+        isFetching ? Array(5).fill(0).map((e, i) => (
+          <React.Fragment key={i}>
+            <div className="w-full border-b border-slate-250" />
+            <div className="flex flex-col gap-2">
+              <div className="loader-light bg-gradient-to-br from-slate-300 via-white to-slate-300 h-7 w-full max-w-80 rounded-xl" />
+              <div className="h-9 w-full max-w-72 loader-light bg-gradient-to-br from-slate-300 via-white to-slate-300 rounded-xl" />
+            </div>
+          </React.Fragment>
+        )) : find.length ? find.map((e, i) => (
           <React.Fragment key={i}>
             <div className="w-full border-b border-slate-250" />
             <div className="flex flex-col gap-2">
