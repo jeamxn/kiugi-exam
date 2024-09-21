@@ -102,6 +102,7 @@ const Search = () => {
         </div>
       </div>
       <Link
+        prefetch
         href="/search"
         className="px-4 py-2 text-sm rounded-xl bg-slate-700 text-white w-full max-w-96 flex flex-row items-center justify-center gap-2"
       >검색하기</Link>
