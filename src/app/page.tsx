@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import React from "react";
 
-import Search from "./search/search";
+import Search from "./search";
 
 const HomePage = () => {
   return (

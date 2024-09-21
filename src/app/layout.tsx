@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import React from "react";
 
 import "./globals.css";
-import Providers from "./providers";
+import Providers from "@/providers";
 
 export const metadata: Metadata = {
   title: "모의고사 키우기",
