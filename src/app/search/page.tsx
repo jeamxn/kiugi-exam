@@ -11,6 +11,7 @@ import { Test, TestResponse } from "@/utils/getTests";
 import { beginYearAtom, endYearAtom, gradeAtom, monthAtom, subjectAtom } from "@/utils/states";
 
 const SearchPage = () => {
+  const [isLast, setIsLast] = React.useState(false);
   const [find, setFind] = React.useState<TestResponse[]>([]);
   const [page, setPage] = React.useState(1);
   const [isBottom, setIsBottom] = React.useState(false);
@@ -34,6 +35,10 @@ const SearchPage = () => {
       };
       const { data } = await axios.post("/search/post", searchData);
       localStorage.setItem("find", JSON.stringify(searchData));
+      if(!data.length) {
+        setIsLast(true);
+        return [];
+      }
       setFind(p => [...p, ...data]);
       setPage(p => p + 1);
       return data as TestResponse[];
@@ -65,7 +70,7 @@ const SearchPage = () => {
   }, []);
 
   React.useEffect(() => {
-    if(!isBottom || isFetching) return;
+    if(!isBottom || isFetching || isLast) return;
     refetch();
   }, [isBottom]);
 
