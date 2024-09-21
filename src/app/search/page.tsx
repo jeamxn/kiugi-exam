@@ -86,7 +86,7 @@ const SearchPage = () => {
         </div>
         <Link 
           href="/"
-          className="border px-4 h-9 text-sm rounded-xl bg-slate-200 max-w-96 flex flex-row items-center justify-start gap-2"
+          className="px-4 h-9 text-sm rounded-xl bg-slate-200 max-w-96 flex flex-row items-center justify-start gap-2"
           prefetch
         >
           <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -120,7 +120,7 @@ const SearchPage = () => {
                       key={i1} 
                       href={e1.url} 
                       target="_blank"
-                      className="border px-4 py-1.5 text-sm rounded-xl bg-slate-200 text-slate-950"
+                      className="px-4 py-1.5 text-sm rounded-xl bg-slate-200 text-slate-950"
                       prefetch
                     >
                       {e1.label}

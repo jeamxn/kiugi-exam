@@ -22,7 +22,7 @@ const Search = () => {
                 key={e}
                 onClick={() => setGrade(e)}
                 className={[
-                  "border px-4 h-8.5 text-sm rounded-xl",
+                  "px-4 h-8.5 text-sm rounded-xl",
                   grade === e ? "bg-slate-700 text-slate-200" : "text-slate-950 bg-slate-200"
                 ].join(" ")}
               >
@@ -42,7 +42,7 @@ const Search = () => {
                   return [...p, _];
                 })}
                 className={[
-                  "border px-4 h-8.5 text-sm rounded-xl",
+                  "px-4 h-8.5 text-sm rounded-xl",
                   subjects.includes(e as Subject) ? "bg-slate-700 text-slate-200" : "text-slate-950 bg-slate-200"
                 ].join(" ")}
               >
@@ -66,7 +66,7 @@ const Search = () => {
                   return [...p, _];
                 })}
                 className={[
-                  "border px-4 h-8.5 text-sm rounded-xl",
+                  "px-4 h-8.5 text-sm rounded-xl",
                   months.includes(e) ? "bg-slate-700 text-slate-200" : "text-slate-950 bg-slate-200"
                 ].join(" ")}
               >
@@ -77,7 +77,7 @@ const Search = () => {
         </div>
         <div className="flex flex-row items-center justify-center gap-2 flex-wrap">
           <select 
-            className="border px-4 h-8.5 text-sm rounded-xl bg-slate-200 text-slate-950"
+            className="px-4 h-8.5 text-sm rounded-xl bg-slate-200 text-slate-950"
             onChange={e => setBeginYear(Number(e.target.value))}
             value={beginYear}
           >
@@ -89,7 +89,7 @@ const Search = () => {
           </select>
           <p className="text-slate-500 text-sm">~</p>
           <select
-            className="border px-4 h-8.5 text-sm rounded-xl bg-slate-200 text-slate-950"
+            className="px-4 h-8.5 text-sm rounded-xl bg-slate-200 text-slate-950"
             onChange={e => setEndYear(Number(e.target.value))}
             value={endYear}
           >
