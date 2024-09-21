@@ -12,6 +12,7 @@ const POST = async (
       subjList,
       beginYear,
       endYear,
+      page,
     }: Test = await req.json();
     const find = await getTests({
       grade,
@@ -19,6 +20,7 @@ const POST = async (
       subjList,
       beginYear,
       endYear,
+      page,
     });
     const response = NextResponse.json(find);
     return response;

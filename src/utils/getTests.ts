@@ -19,6 +19,7 @@ export type Test = {
   subjList: Subject[];
   beginYear: number;
   endYear: number;
+  page?: number;
 };
 
 export type TestResponse = {
@@ -35,6 +36,7 @@ export const getTests = async ({
   subjList,
   beginYear,
   endYear,
+  page = 1,
 }: Test) => {
   const response = await axios.post(
     "https://www.ebsi.co.kr/ebs/xip/xipc/previousPaperListAjax.ajax",
@@ -45,7 +47,8 @@ export const getTests = async ({
       ["sort", "recent"],
       ["beginYear", String(beginYear)],
       ["endYear", String(endYear)],
-      ["pageSize", "100"]
+      ["pageSize", "100"],
+      ["currentPage", String(page)],
     ])
   );
   const $ = load(response.data);

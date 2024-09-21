@@ -7,32 +7,67 @@ import Link from "next/link";
 import React from "react";
 import { useRecoilValue } from "recoil";
 
-import { TestResponse } from "@/utils/getTests";
+import { Test, TestResponse } from "@/utils/getTests";
 import { beginYearAtom, endYearAtom, gradeAtom, monthAtom, subjectAtom } from "@/utils/states";
 
 const SearchPage = () => {
+  const [find, setFind] = React.useState<TestResponse[]>([]);
+  const [page, setPage] = React.useState(1);
+  const [isBottom, setIsBottom] = React.useState(false);
+  const bottomRef = React.useRef(null);
   const grade = useRecoilValue(gradeAtom);
   const subjList = useRecoilValue(subjectAtom);
   const monthList = useRecoilValue(monthAtom);
   const beginYear = useRecoilValue(beginYearAtom);
   const endYear = useRecoilValue(endYearAtom);
 
-  const { isFetching, data: find } = useQuery({
+  const { isFetching, refetch } = useQuery({
     queryKey: ["get_data", grade, subjList, monthList, beginYear, endYear],
     queryFn: async () => {
-      const searchData = {
+      const searchData: Test = {
         grade,
         monthList,
         subjList,
         beginYear,
         endYear,
+        page,
       };
       const { data } = await axios.post("/search/post", searchData);
       localStorage.setItem("find", JSON.stringify(searchData));
+      setFind(p => [...p, ...data]);
+      setPage(p => p + 1);
       return data as TestResponse[];
     },
     initialData: [],
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
   });
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        setIsBottom(true);
+      } else {
+        setIsBottom(false);
+      }
+    });
+
+    if (bottomRef.current) {
+      observer.observe(bottomRef.current);
+    }
+
+    return () => {
+      if (bottomRef.current) {
+        observer.unobserve(bottomRef.current);
+      }
+    };
+  }, []);
+
+  React.useEffect(() => {
+    if(!isBottom || isFetching) return;
+    refetch();
+  }, [isBottom]);
 
   return (
     <div className="w-full h-full flex flex-col gap-5 px-4 py-5">
@@ -96,15 +131,7 @@ const SearchPage = () => {
         </Link>
       </div>
       {
-        isFetching ? Array(5).fill(0).map((e, i) => (
-          <React.Fragment key={i}>
-            <div className="w-full border-b border-slate-250" />
-            <div className="flex flex-col gap-2">
-              <div className="loader-light bg-gradient-to-br from-slate-300 via-white to-slate-300 h-7 w-full max-w-80 rounded-xl" />
-              <div className="h-9 w-full max-w-72 loader-light bg-gradient-to-br from-slate-300 via-white to-slate-300 rounded-xl" />
-            </div>
-          </React.Fragment>
-        )) : find.length ? find.map((e, i) => (
+        find.length ? find.map((e, i) => (
           <React.Fragment key={i}>
             <div className="w-full border-b border-slate-250" />
             <div className="flex flex-col gap-2">
@@ -130,7 +157,7 @@ const SearchPage = () => {
               </div>
             </div>
           </React.Fragment>
-        )) : (
+        )) : isFetching ? null : (
           <>
             <div className="w-full border-b border-slate-250" />
             <div className="flex flex-col gap-2">
@@ -139,12 +166,23 @@ const SearchPage = () => {
           </>
         )
       }
+      {
+        isFetching ? Array(5).fill(0).map((e, i) => (
+          <React.Fragment key={i}>
+            <div className="w-full border-b border-slate-250" />
+            <div className="flex flex-col gap-2">
+              <div className="loader-light bg-gradient-to-br from-slate-300 via-white to-slate-300 h-7 w-full max-w-80 rounded-xl" />
+              <div className="h-9 w-full max-w-72 loader-light bg-gradient-to-br from-slate-300 via-white to-slate-300 rounded-xl" />
+            </div>
+          </React.Fragment>
+        )) : null
+      }
       <div className="w-full border-b border-slate-250" />
       <div className="flex flex-col gap-1">
         <p className="text-sm text-slate-500">본 사이트는 수험생의 편의를 위한 바로가기 사이트입니다.</p>
         <p className="text-sm text-slate-500">재배포가 아닌 EBSi로 바로가는 링크를 제공합니다.</p>
       </div>
-      <div className="pb-2.5" />
+      <div className="pb-2.5" ref={bottomRef} />
     </div>
   );
 };
