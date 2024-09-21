@@ -51,32 +51,45 @@ const SearchPage = () => {
         </svg>
         <p className="text-slate-600 font-semibold text-2xl">모의고사 키우기</p>
       </Link>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1">
         <div className="flex flex-col gap-1 p-3 rounded-xl border border-slate-300 w-full max-w-96">
           <p className="text-slate-700 font-medium">선택된 검색 조건</p>
-          <div className="flex flex-row items-center justify-start gap-1.5">
-            <p className="text-slate-500">학년</p>
-            <p className="text-slate-700">{grade}</p>
-          </div>
-          <div className="flex flex-row items-center justify-start gap-1.5">
-            <p className="text-slate-500">과목</p>
-            <p className="text-slate-700">{subjList.length ? subjList.join(", ") : "선택되지 않음"}</p>
-          </div>
-          <div className="flex flex-row items-center justify-start gap-1.5">
-            <p className="text-slate-500">시행월</p>
-            <p className="text-slate-700">{monthList.length ? monthList.join(", ") : "선택되지 않음"}</p>
-          </div>
-          <div className="flex flex-row items-center justify-start gap-1.5">
-            <p className="text-slate-500">학년도</p>
-            <p className="text-slate-700">{beginYear}년 ~ {endYear}년</p>
-          </div>
+          <table>
+            <tbody>
+              <tr>
+                <td className="text-slate-500 pr-3 pt-1">학년</td>
+                <td className="text-slate-700 pt-1">{grade}학년</td>
+              </tr>
+              <tr>
+                <td className="text-slate-500 pr-3 pt-1">과목</td>
+                <td className="text-slate-700 pt-1">{subjList.length ? subjList.join(", ") : "선택되지 않음"}</td>
+              </tr>
+              <tr>
+                <td className="text-slate-500 pr-3 pt-1">시행월</td>
+                <td className="text-slate-700 pt-1">
+                  {
+                    monthList.length ? 
+                      [...monthList]
+                        .sort((a, b) => a - b)
+                        .map(e => e + "월")
+                        .join(", ") 
+                      : "선택되지 않음"
+                  }
+                </td>
+              </tr>
+              <tr>
+                <td className="text-slate-500 pr-3 pt-1">학년도</td>
+                <td className="text-slate-700 pt-1">{beginYear}년 ~ {endYear}년</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
         <Link 
           href="/"
-          className="border px-4 py-2 text-sm rounded-xl bg-slate-200 max-w-96 flex flex-row items-center justify-start gap-2"
+          className="border px-4 h-9 text-sm rounded-xl bg-slate-200 max-w-96 flex flex-row items-center justify-start gap-2"
           prefetch
         >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path className="fill-slate-950" d="M3.10483 8.74476L8.27408 13.914C8.42274 14.0627 8.49616 14.2367 8.49433 14.436C8.49233 14.6353 8.41383 14.8126 8.25883 14.9678C8.10366 15.1126 7.92799 15.1876 7.73183 15.1928C7.53566 15.1979 7.35999 15.1229 7.20483 14.9678L0.864576 8.62751C0.770909 8.53384 0.704909 8.43509 0.666576 8.33126C0.628076 8.22743 0.608826 8.11526 0.608826 7.99476C0.608826 7.87426 0.628076 7.76209 0.666576 7.65826C0.704909 7.55443 0.770909 7.45568 0.864576 7.36201L7.20483 1.02176C7.34333 0.88326 7.51483 0.812427 7.71933 0.80926C7.92383 0.806093 8.10366 0.876927 8.25883 1.02176C8.41383 1.17693 8.49133 1.35509 8.49133 1.55626C8.49133 1.75759 8.41383 1.93584 8.25883 2.09101L3.10483 7.24476H14.4818C14.6947 7.24476 14.8728 7.31659 15.0163 7.46026C15.16 7.60376 15.2318 7.78193 15.2318 7.99476C15.2318 8.20759 15.16 8.38576 15.0163 8.52926C14.8728 8.67293 14.6947 8.74476 14.4818 8.74476H3.10483Z" />
           </svg>
           <p className="text-slate-950">다시 검색하기</p>
