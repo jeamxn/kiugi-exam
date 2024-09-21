@@ -22,7 +22,7 @@ const Search = () => {
                 key={e}
                 onClick={() => setGrade(e)}
                 className={[
-                  "px-4 h-8.5 text-sm rounded-xl",
+                  "px-4 h-8.5 text-sm rounded-xl transition-colors",
                   grade === e ? "bg-slate-700 text-slate-200" : "text-slate-950 bg-slate-200"
                 ].join(" ")}
               >
@@ -42,7 +42,7 @@ const Search = () => {
                   return [...p, _];
                 })}
                 className={[
-                  "px-4 h-8.5 text-sm rounded-xl",
+                  "px-4 h-8.5 text-sm rounded-xl transition-colors",
                   subjects.includes(e as Subject) ? "bg-slate-700 text-slate-200" : "text-slate-950 bg-slate-200"
                 ].join(" ")}
               >
@@ -66,7 +66,7 @@ const Search = () => {
                   return [...p, _];
                 })}
                 className={[
-                  "px-4 h-8.5 text-sm rounded-xl",
+                  "px-4 h-8.5 text-sm rounded-xl transition-colors",
                   months.includes(e) ? "bg-slate-700 text-slate-200" : "text-slate-950 bg-slate-200"
                 ].join(" ")}
               >
@@ -77,7 +77,7 @@ const Search = () => {
         </div>
         <div className="flex flex-row items-center justify-center gap-2 flex-wrap">
           <select 
-            className="px-4 h-8.5 text-sm rounded-xl bg-slate-200 text-slate-950"
+            className="px-4 h-8.5 text-sm rounded-xl transition-colors bg-slate-200 text-slate-950"
             onChange={e => setBeginYear(Number(e.target.value))}
             value={beginYear}
           >
@@ -89,7 +89,7 @@ const Search = () => {
           </select>
           <p className="text-slate-500 text-sm">~</p>
           <select
-            className="px-4 h-8.5 text-sm rounded-xl bg-slate-200 text-slate-950"
+            className="px-4 h-8.5 text-sm rounded-xl transition-colors bg-slate-200 text-slate-950"
             onChange={e => setEndYear(Number(e.target.value))}
             value={endYear}
           >
@@ -103,9 +103,17 @@ const Search = () => {
       </div>
       <Link
         prefetch
-        href="/search"
-        className="px-4 h-9 text-sm rounded-xl bg-slate-700 text-white w-full max-w-96 flex flex-row items-center justify-center gap-2"
-      >검색하기</Link>
+        href={subjects.length && months.length && beginYear <= endYear ? "/search" : "/"}
+        className={[
+          "px-4 h-9 rounded-xl bg-slate-700 w-full max-w-96 flex flex-row items-center justify-center gap-2 transition-opacity",
+          subjects.length && months.length && beginYear <= endYear ? "" : "opacity-60 cursor-default"
+        ].join(" ")}
+      >
+        <svg width="14" height="14" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path className="fill-white" d="M6.51924 12.6152C4.81157 12.6152 3.36541 12.023 2.18074 10.8385C0.996241 9.65383 0.403992 8.20767 0.403992 6.5C0.403992 4.79233 0.996241 3.34617 2.18074 2.1615C3.36541 0.977 4.81157 0.38475 6.51924 0.38475C8.22691 0.38475 9.67307 0.977 10.8577 2.1615C12.0422 3.34617 12.6345 4.79233 12.6345 6.5C12.6345 7.21417 12.5147 7.89625 12.275 8.54625C12.0352 9.19625 11.7152 9.76158 11.3152 10.2423L17.0692 15.9962C17.2077 16.1346 17.2786 16.3086 17.2817 16.5182C17.2849 16.7279 17.2141 16.9052 17.0692 17.05C16.9244 17.1948 16.7487 17.2673 16.5422 17.2673C16.3359 17.2673 16.1603 17.1948 16.0155 17.05L10.2615 11.296C9.76149 11.7088 9.18649 12.0319 8.53649 12.2653C7.88649 12.4986 7.21407 12.6152 6.51924 12.6152ZM6.51924 11.1155C7.80774 11.1155 8.89907 10.6683 9.79324 9.774C10.6876 8.87983 11.1347 7.7885 11.1347 6.5C11.1347 5.2115 10.6876 4.12017 9.79324 3.226C8.89907 2.33167 7.80774 1.8845 6.51924 1.8845C5.23074 1.8845 4.13941 2.33167 3.24524 3.226C2.35091 4.12017 1.90374 5.2115 1.90374 6.5C1.90374 7.7885 2.35091 8.87983 3.24524 9.774C4.13941 10.6683 5.23074 11.1155 6.51924 11.1155Z" />
+        </svg>
+        <p className="text-white text-sm">검색하기</p>
+      </Link>
       <div className="flex flex-col items-center justify-center gap-1">
         <p className="text-sm text-slate-500 text-center">평가원 수능/수능모의평가는 시행년도로 검색해주세요.</p>
         <p className="text-sm text-slate-500 text-center">ex) {new Date().getFullYear() + 1}학년도 6평/9평/수능 {"->"} {new Date().getFullYear()}년 시행으로 검색</p>
