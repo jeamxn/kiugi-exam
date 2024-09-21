@@ -5,13 +5,6 @@ import React from "react";
 import { Subject, subjectMap } from "@/utils/getTests";
 
 const Home = () => {
-  // const find = await getTests({
-  //   grade: 3,
-  //   monthList: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-  //   subjList: ["과학탐구", "국어", "사회탐구", "수학", "영어", "제2외국어", "직업탐구", "한국사"],
-  //   beginYear: 1000,
-  //   endYear: 3000,
-  // });
   const [grade, setGrade] = React.useState<number>(3);
   const [subjects, setSubject] = React.useState<Subject[]>([]);
   const [months, setMonth] = React.useState<number[]>([]);

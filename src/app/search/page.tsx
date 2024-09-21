@@ -1,10 +1,9 @@
 import Link from "next/link";
 import React from "react";
 
-import { getTests, Subject, subjectMap } from "@/utils/getTests";
-import { gradeAtom, monthsAtom, subjectsAtom } from "@/utils/states";
+import { getTests, Subject } from "@/utils/getTests";
 
-const Home = async ({
+const Search = async ({
   searchParams
 }: {
   searchParams: {
@@ -116,4 +115,4 @@ const Home = async ({
   );
 };
 
-export default Home;
+export default Search;
