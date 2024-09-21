@@ -1,30 +1,36 @@
+"use client";
+
 import { atom } from "recoil";
 
 import { Subject } from "./getTests";
 
-const storageData = JSON.parse(localStorage.getItem("find") || "{}");
+const getFromLocalStorage = (key: string, defaultValue: any) => {
+  if(typeof window === "undefined") return defaultValue;
+  const storageData = JSON.parse(localStorage.getItem("find") || "{}");
+  return storageData[key] || defaultValue;
+};
 
 export const gradeAtom = atom({
   key: "grade",
-  default: storageData?.grade || 3,
+  default: getFromLocalStorage("grade", 3),
 });
 
 export const subjectAtom = atom<Subject[]>({
   key: "subject",
-  default: storageData?.subjList || [],
+  default: getFromLocalStorage("subjList", []),
 });
 
 export const monthAtom = atom<number[]>({
   key: "month",
-  default: storageData?.monthList || [],
+  default: getFromLocalStorage("monthList", []),
 });
 
 export const beginYearAtom = atom({
   key: "beginYear",
-  default: storageData?.beginYear || new Date().getFullYear(),
+  default: getFromLocalStorage("beginYear", new Date().getFullYear()),
 });
 
 export const endYearAtom = atom({
   key: "endYear",
-  default: storageData?.endYear || new Date().getFullYear(),
+  default: getFromLocalStorage("endYear", new Date().getFullYear()),
 });

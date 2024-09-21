@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import React from "react";
 
 import Search from "./search/search";
@@ -27,4 +28,6 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default dynamic(() => Promise.resolve(HomePage), {
+  ssr: false,
+});

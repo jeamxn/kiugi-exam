@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import React from "react";
 import { useRecoilValue } from "recoil";
@@ -133,4 +134,6 @@ const SearchPage = () => {
   );
 };
 
-export default SearchPage;
+export default dynamic(() => Promise.resolve(SearchPage), {
+  ssr: false,
+});
