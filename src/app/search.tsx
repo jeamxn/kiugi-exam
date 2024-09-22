@@ -23,7 +23,7 @@ const Search = () => {
                 onClick={() => setGrade(e)}
                 className={[
                   "px-4 h-8.5 text-sm rounded-xl transition-colors",
-                  grade === e ? "bg-slate-700 text-slate-200" : "text-slate-950 bg-slate-200"
+                  grade === e ? "bg-slate-700 text-white" : "text-slate-950 bg-slate-200"
                 ].join(" ")}
               >
                 {e}학년
@@ -43,7 +43,7 @@ const Search = () => {
                 })}
                 className={[
                   "px-4 h-8.5 text-sm rounded-xl transition-colors",
-                  subjects.includes(e as Subject) ? "bg-slate-700 text-slate-200" : "text-slate-950 bg-slate-200"
+                  subjects.includes(e as Subject) ? "bg-slate-700 text-white" : "text-slate-950 bg-slate-200"
                 ].join(" ")}
               >
                 {e}
@@ -67,7 +67,7 @@ const Search = () => {
                 })}
                 className={[
                   "px-4 h-8.5 text-sm rounded-xl transition-colors",
-                  months.includes(e) ? "bg-slate-700 text-slate-200" : "text-slate-950 bg-slate-200"
+                  months.includes(e) ? "bg-slate-700 text-white" : "text-slate-950 bg-slate-200"
                 ].join(" ")}
               >
                 {e}월{e === 4 ? ", 5월" : ""}
