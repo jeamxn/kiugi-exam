@@ -23,7 +23,7 @@ const SearchPage = () => {
   const endYear = useRecoilValue(endYearAtom);
 
   const { isFetching, refetch } = useQuery({
-    queryKey: ["get_data", grade, subjList, monthList, beginYear, endYear],
+    queryKey: ["get_data", grade, subjList, monthList, beginYear, endYear, page],
     queryFn: async () => {
       const searchData: Test = {
         grade,
@@ -97,15 +97,15 @@ const SearchPage = () => {
           <table>
             <tbody>
               <tr>
-                <td className="text-slate-500 pr-3 pt-1">학년</td>
+                <td className="text-slate-500 w-16 pt-1">학년</td>
                 <td className="text-slate-700 pt-1">{grade}학년</td>
               </tr>
               <tr>
-                <td className="text-slate-500 pr-3 pt-1">과목</td>
+                <td className="text-slate-500 w-16 pt-1">과목</td>
                 <td className="text-slate-700 pt-1">{subjList.length ? subjList.join(", ") : "선택되지 않음"}</td>
               </tr>
               <tr>
-                <td className="text-slate-500 pr-3 pt-1">시행월</td>
+                <td className="text-slate-500 w-16 pt-1">시행월</td>
                 <td className="text-slate-700 pt-1">
                   {
                     monthList.length ? 
@@ -118,7 +118,7 @@ const SearchPage = () => {
                 </td>
               </tr>
               <tr>
-                <td className="text-slate-500 pr-3 pt-1">학년도</td>
+                <td className="text-slate-500 w-16 pt-1">학년도</td>
                 <td className="text-slate-700 pt-1">{beginYear}년 ~ {endYear}년</td>
               </tr>
             </tbody>
@@ -136,33 +136,52 @@ const SearchPage = () => {
         </Link>
       </div>
       {
-        find.length ? find.map((e, i) => (
-          <React.Fragment key={i}>
-            <div className="w-full border-b border-slate-250" />
-            <div className="flex flex-col gap-2">
-              <p
-                className="text-lg font-medium text-slate-700"
-              >{e.title}</p>
-              <div
-                className="flex flex-row gap-1 flex-wrap"
-              >
-                {
-                  e.buttons.map((e1, i1) => (
-                    <Link 
-                      key={i1} 
-                      href={e1.url} 
-                      target="_blank"
-                      className="px-4 py-1.5 text-sm rounded-xl bg-slate-200 text-slate-950"
-                      prefetch
-                    >
-                      {e1.label}
-                    </Link>
-                  ))
-                }
+        find.length ? find.map((e, i) => {
+          const type = grade !== 3 ? "ooe" : 
+            e.date.month === 6 || e.date.month === 9 || e.date.month === 11 ? "kice" : "ooe";
+          return (
+            <React.Fragment key={i}>
+              <div className="w-full border-b border-slate-250" />
+              <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-0">
+                  <p
+                    className="text-lg font-medium text-slate-700"
+                  >{e.title}</p>
+                  <p className="text-sm text-slate-400">{e.date.year}.{e.date.month}.{e.date.day} 시행 | {e.questions}문항 | {e.subject}</p>
+                </div>
+                <div
+                  className="flex flex-row gap-1 flex-wrap"
+                >
+                  {
+                    e.buttons.map((e1, i1) => (
+                      <Link 
+                        key={i1} 
+                        href={e1.url} 
+                        target="_blank"
+                        className="px-4 py-1.5 text-sm rounded-xl bg-slate-200 text-slate-950"
+                        prefetch
+                      >
+                        {e1.label}
+                      </Link>
+                    ))
+                  }
+                  {
+                    type === "ooe" && !e.subject.includes("탐구") && e.subject !== "제2외국어" ? (
+                      <Link 
+                        href={`/grade?type=${type}&grade=${grade}&subject=${e.subject}`}
+                        target="_blank"
+                        className="px-4 py-1.5 text-sm rounded-xl bg-slate-200 text-slate-950"
+                        prefetch
+                      >
+                        등급
+                      </Link>
+                    ) : null
+                  }
+                </div>
               </div>
-            </div>
-          </React.Fragment>
-        )) : isFetching ? null : (
+            </React.Fragment>
+          );
+        }) : isFetching ? null : (
           <>
             <div className="w-full border-b border-slate-250" />
             <div className="flex flex-col gap-2">

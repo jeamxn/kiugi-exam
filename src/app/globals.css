@@ -58,3 +58,25 @@
     background-position: 0% 50%;
   }
 }
+
+.grade-table > table {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+.grade-table > td { 
+  padding: 0.5rem;
+  border: 1px solid #e2e8f0;
+}
+.grade-table > dt { 
+  padding-bottom: 0.25rem;
+}
+/* tbody의 첫번째 tr */
+.grade-table > tbody > tr:first-child {
+  background-color: #F1F5F9;
+}
+.grade-table > tr:first-child > td {
+  font-weight: semi-bold;
+}
