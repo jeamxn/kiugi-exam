@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { getChoseong } from "es-hangul";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import React from "react";
@@ -148,7 +149,10 @@ const SearchPage = () => {
       </div>
       {
         find.length ? find
-          .filter(e => e.title.replace(/\s/g, "").includes(search.replace(/\s/g, "")))
+          .filter(e => 
+            getChoseong(e.title.replace(/\s/g, ""))
+              .includes(getChoseong(search.replace(/\s/g, "")))
+          )
           .map((e, i) => {
             const type = grade !== 3 ? "ooe" : 
               e.date.month === 6 || e.date.month === 9 || e.date.month === 11 ? "kice" : "ooe";
