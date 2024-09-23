@@ -165,7 +165,7 @@ const SearchPage = () => {
                       </Link>
                     ))
                   }
-                  {
+                  {/* {
                     type === "ooe" && !e.subject.includes("탐구") && e.subject !== "제2외국어" ? (
                       <Link 
                         href={`/grade?type=${type}&grade=${grade}&subject=${e.subject}`}
@@ -176,7 +176,7 @@ const SearchPage = () => {
                         등급
                       </Link>
                     ) : null
-                  }
+                  } */}
                 </div>
               </div>
             </React.Fragment>
