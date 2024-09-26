@@ -182,18 +182,18 @@ const SearchPage = () => {
                         </Link>
                       ))
                     }
-                    {/* {
-                    type === "ooe" && !e.subject.includes("탐구") && e.subject !== "제2외국어" ? (
-                      <Link 
-                        href={`/grade?type=${type}&grade=${grade}&subject=${e.subject}`}
-                        target="_blank"
-                        className="px-4 py-1.5 text-sm rounded-xl bg-slate-200 text-slate-950"
-                        prefetch
-                      >
+                    {
+                      type === "ooe" && !e.subject.includes("탐구") && e.subject !== "제2외국어" ? (
+                        <Link 
+                          href={`/grade?type=${type}&grade=${grade}&subject=${e.subject}`}
+                          target="_blank"
+                          className="px-4 py-1.5 text-sm rounded-xl bg-slate-200 text-slate-950"
+                          prefetch
+                        >
                         등급
-                      </Link>
-                    ) : null
-                  } */}
+                        </Link>
+                      ) : null
+                    }
                   </div>
                 </div>
               </React.Fragment>

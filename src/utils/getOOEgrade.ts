@@ -1,13 +1,12 @@
 import axios from "axios";
 import { load } from "cheerio";
 
+import { getHeaders } from "./getHeader";
 import { Subject } from "./getTests";
 
 export const getOOEgrade = async (grade: number, subject: Subject, subSubject: string = "") => {
-  const { data } = await axios.get("https://namu.wiki/w/전국연합학력평가/등급 구분점수", {
-    headers: {
-      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
-    }
+  const { data } = await axios.get("https://namu.wiki/w/%EC%A0%84%EA%B5%AD%EC%97%B0%ED%95%A9%ED%95%99%EB%A0%A5%ED%8F%89%EA%B0%80/%EB%93%B1%EA%B8%89%20%EA%B5%AC%EB%B6%84%EC%A0%90%EC%88%98", {
+    headers: await getHeaders()
   });
   
   const $ = load(data);
